@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#050607" />
+  <meta name="description" content="NIGHT SHIFT — 360° 850nm infrared night-vision farmyard rat sniper game for desktop & mobile, built for dotframe.crafter.games." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <title>NIGHT SHIFT // 850nm IR Rat Sniper</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <div id="app">
+    <div id="viewport-wrap">
+      <canvas id="game-canvas"></canvas>
+
+      <!-- Red video-style kill counter ("Number 5") -->
+      <div id="kill-banner" class="hidden"></div>
+
+      <!-- Shot feedback micro-toast -->
+      <div id="shot-feedback" class="hidden"></div>
+
+      <!-- Reload / Status banner -->
+      <div id="status-pill" class="hidden"></div>
+
+      <!-- Mobile Touch Controls (auto-shown on touch devices during gameplay) -->
+      <div id="touch-controls" class="hidden" aria-label="Touch sniper controls">
+        <div class="touch-left">
+          <button id="t-breath" class="touch-btn" type="button">BREATH</button>
+          <button id="t-zoom" class="touch-btn" type="button">ZOOM</button>
+          <button id="t-ir" class="touch-btn" type="button">IR HI</button>
+        </div>
+        <div class="touch-right">
+          <button id="t-reload" class="touch-btn" type="button">RELOAD</button>
+          <button id="t-fire" class="touch-btn touch-fire" type="button">FIRE</button>
+        </div>
+      </div>
+
+      <!-- Full-Bleed Landing Page over live 360° IR background -->
+      <div id="start-overlay" class="overlay landing-overlay">
+        <div class="landing-shell">
+          <header class="landing-nav">
+            <div class="brand">
+              <img src="/assets/logo.svg" alt="Rat Sniper" class="nav-logo" />
+              <span>NIGHT SHIFT</span>
+            </div>
+            <div class="nav-links">
+              <span class="live-pill"><span class="rec-dot"></span>850nm IR LIVE</span>
+              <a href="https://dotframe.crafter.games" target="_blank" rel="noreferrer">dotframe</a>
+              <a href="https://github.com/crafter-games/rat-sniper" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+          </header>
+
+          <section class="hero-card">
+            <div class="hero-top">
+              <img src="/assets/logo.svg" alt="NIGHT SHIFT logo" class="hero-logo" />
+              <div class="hero-copy">
+                <div class="eyebrow">850nm DIGITAL IR OPTIC // .22 PCP AIR RIFLE</div>
+                <h1>RAT SNIPER</h1>
+                <p class="subtitle">
+                  Step into the midnight barn with a suppressed .22 PCP rifle and an 850nm infrared scope.
+                  Scan a seamless 360° farmyard, spot glowing white eyeshine along concrete seams, steady your breath, and clear the yard.
+                </p>
+              </div>
+            </div>
+
+            <div class="hero-cta-row">
+              <button id="start-btn" class="primary-btn hero-play" type="button">PLAY NOW — ENGAGE IR SCOPE</button>
+            </div>
+
+            <div class="setup-strip">
+              <div class="setup-label">STARTING HEADING (360° SEAMLESS YARD)</div>
+              <div class="sector-picker" id="sector-picker">
+                <button class="sector-btn active" data-sector="0" type="button">
+                  <span class="sector-num">060° NORTH</span>
+                  <span class="sector-name">Barn Wall &amp; Debris</span>
+                  <span class="sector-meta">Burrows, cinder block, jug</span>
+                </button>
+                <button class="sector-btn" data-sector="1" type="button">
+                  <span class="sector-num">180° SOUTH</span>
+                  <span class="sector-name">Ledge &amp; Doorway</span>
+                  <span class="sector-meta">Slab crevice, steel door</span>
+                </button>
+                <button class="sector-btn" data-sector="2" type="button">
+                  <span class="sector-num">300° WEST</span>
+                  <span class="sector-name">Timber Feed Rack</span>
+                  <span class="sector-meta">Posts, wire grate, weeds</span>
+                </button>
+              </div>
+
+              <div class="mode-row">
+                <label class="toggle-chip">
+                  <input type="radio" name="mode" value="shift" checked />
+                  <span>Night Shift (15 Targets)</span>
+                </label>
+                <label class="toggle-chip">
+                  <input type="radio" name="mode" value="endless" />
+                  <span>Free Hunt (Endless 360°)</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="feature-grid">
+              <div class="feat">
+                <div class="feat-title">360° Infinite Yard</div>
+                <div class="feat-desc">Seamless cylindrical panorama with live digital compass &amp; persistent rats.</div>
+              </div>
+              <div class="feat">
+                <div class="feat-title">Real .22 Ballistics</div>
+                <div class="feat-desc">IR pellet tracer, drop beyond 25m zero, recoil kick &amp; 8-rd rotary mag.</div>
+              </div>
+              <div class="feat">
+                <div class="feat-title">Desktop &amp; Mobile</div>
+                <div class="feat-desc">Pointer Lock on desktop; 1-finger 360° drag &amp; multitouch buttons on mobile.</div>
+              </div>
+              <div class="feat">
+                <div class="feat-title">Built for dotframe</div>
+                <div class="feat-desc">Deterministic 60Hz sim contract &amp; procedural Web Audio with zero audio assets.</div>
+              </div>
+            </div>
+
+            <div class="controls-grid desktop-controls">
+              <div><kbd>Mouse</kbd> 360° Aim (Pointer Lock)</div>
+              <div><kbd>LMB</kbd> Fire .22 pellet</div>
+              <div><kbd>RMB</kbd> / <kbd>Scroll</kbd> Zoom (2x / 4x / 8x)</div>
+              <div><kbd>Shift</kbd> / <kbd>Space</kbd> Hold breath</div>
+              <div><kbd>R</kbd> Reload 8-rd mag</div>
+              <div><kbd>F</kbd> IR Torch (HI / LO)</div>
+              <div><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> Slew to zone</div>
+              <div><kbd>H</kbd> Toggle HUD</div>
+            </div>
+
+            <div class="controls-grid mobile-controls">
+              <div><kbd>Drag</kbd> Pan 360° scope</div>
+              <div><kbd>FIRE</kbd> Shoot .22 pellet</div>
+              <div><kbd>ZOOM</kbd> Cycle 2x / 4x / 8x</div>
+              <div><kbd>BREATH</kbd> Hold to steady aim</div>
+            </div>
+          </section>
+
+          <footer class="landing-footer">
+            <span>Open source MIT • Crafter Station</span>
+            <a href="https://dotframe.crafter.games" target="_blank" rel="noreferrer">Powered by dotframe.crafter.games</a>
+          </footer>
+        </div>
+      </div>
+
+      <!-- Debrief Overlay -->
+      <div id="debrief-overlay" class="overlay hidden">
+        <div class="panel">
+          <div class="eyebrow" id="debrief-eyebrow">360° NIGHT SHIFT COMPLETE</div>
+          <h2 id="debrief-title">FARMYARD SECURED</h2>
+          <div class="stats-grid" id="debrief-stats"></div>
+          <div class="debrief-actions">
+            <button id="next-sector-btn" class="primary-btn" type="button">NEW NIGHT SHIFT</button>
+            <button id="replay-btn" class="secondary-btn" type="button">REPLAY</button>
+            <button id="menu-btn" class="secondary-btn" type="button">MENU</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/main.web.ts"></script>
+</body>
+</html>

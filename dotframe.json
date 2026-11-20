@@ -1,0 +1,16 @@
+{
+  "name": "rat-sniper",
+  "sim": "sim.ts",
+  "targets": {
+    "web": {
+      "steps": [{ "label": "bundle (hashed)", "argv": ["bun", "scripts/build-web.ts"] }],
+      "out": "dist/web",
+      "deploy": {
+        "provider": "vercel",
+        "project": "rat-sniper",
+        "scope": "crafter-station"
+      }
+    }
+  },
+  "assets": { "localOnly": [] }
+}
